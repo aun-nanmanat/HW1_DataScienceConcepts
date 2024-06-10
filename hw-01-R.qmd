@@ -1,0 +1,74 @@
+---
+title: "HW1-My Data Science Profile"
+author: "Nanmanat Disayakamonpan"
+format: 
+  html: 
+    code-fold: true
+editor: source
+---
+
+```{r load-packages-and-data, message = FALSE}
+#| echo: false
+# Load packages and data
+library(tidyverse)
+profiles <- read_csv("data/ourdatascienceprofiles.csv")
+```
+
+## My data science profile
+
+```{r my-data-science-profile}
+#| echo: false
+myname <- "Nanmanat Disayakamonpan"
+profiles |> 
+  pivot_longer(`Social Science`:`Machine Learning`, names_to = "Dimension") |> 
+  filter(Name == myname) |> 
+  ggplot(aes(x = value, y = Dimension)) + 
+  geom_col(fill = "darkred") +
+  labs(title = myname)
+```
+
+As you can see the graph for my data science profile, it is noticeable that **the business** is my strongest dimension with the value of 10. On the other hand, my weakest dimensions are **programming and machine learning** with the value of 1.
+
+## Out data science group
+
+```{r mean-dimension-values}
+#| echo: false
+profiles |> 
+  summarize(across(`Social Science`:`Machine Learning`, mean))
+```
+
+The dimension with the most experience in the group is **Data Visualization** with ***a value of 6.85***.
+
+The dimension with the least experience in the group is **Machine Learning** with ***a value of 2.85***.
+
+## Operating Systems in our group
+
+```{r operating-systems}
+#| echo: false
+profiles |> 
+  group_by(`What is the operating system of your computer?`) |> 
+  count()
+```
+
+## Use of Artificial Intelligence in our group
+
+```{r use-of-artificial-intelligence-1}
+#| echo: false
+profiles |> 
+  ggplot(data =profiles, mapping =aes(x =`Have you used AI Tools (like GitHub Copilot) while writing code?`)) +
+  geom_bar(fill = "blue") 
+```
+
+```{r use-of-artificial-intelligence-2}
+#| echo: false
+profiles |> 
+  ggplot(data =profiles, mapping =aes(x =`Have you used AI Tools (like ChatGPT) to draft text for you?`)) +
+  geom_bar(fill = "red")
+```
+
+```{r use-of-artificial-intelligence-3}
+#| echo: false
+profiles |>
+  ggplot(data =profiles, mapping =aes(x =`Have you chatted with AI Tools (like ChatGPT) to learn about a new topic?`)) +
+  geom_bar(fill = "yellow")
+```
